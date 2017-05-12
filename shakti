@@ -7,7 +7,7 @@ header("Access-Control-Allow-Origin: *");
 
 # usage: sudo ./shakti -p PORT
 # -------------------------------
-# Shell attach kindly to internet
+# Shell attached kindly to internet
 # Bind the shell to any http port
 # Default port: 707
 # Nico KraZhtest | 04/2017 
@@ -57,12 +57,9 @@ echo "
 echo "<div style=display:none>";
 system("clear");
 system("echo '\e[38;5;198mShell attach kindly to internet'");
-for ($i = 0; $i <= 100; $i++) {
-    echo "\033[44mspawning... {$i}%\r"."\033[37m";
-    usleep(100);
- }
-usleep(100);
-echo "</div>\n";
+echo "\033[44mspawning... {$i}\r"."\033[37m";
+usleep(100000);
+echo "\n</div>\n";
 @system("$cmd 2>&1 > shell &&
           aha --black -s -f shell > out.html &");
 @system("screen php -S localhost:$port shakti");
