@@ -82,7 +82,7 @@ echo "
           document.body.innerHTML = this.responseText
           lnk()
           document.body.style.filter='blur(0px)'
-                    if (prt.value !== location.port){
+         if (prt.value !== location.port){
           if (window.confirm('Job running @ '+
                'http://localhost:'+prt.value+'/?cmd='+pwn.value+
                 '&port='+prt.value+'&live')){
