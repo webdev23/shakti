@@ -1,0 +1,175 @@
+#!/usr/bin/php
+
+<?php
+header("Access-Control-Allow-Origin: *");
+
+#> screen aha cat whoami lshw
+
+# usage: sudo ./shakti -p PORT
+# -------------------------------
+# Shell attach kindly to internet
+# Bind the shell to any http port
+# Default port: 707
+# Nico KraZhtest | 04/2017 
+
+$cmd  = @$_GET["cmd"];
+$port = @$_GET["port"];
+$live = @$_GET["live"];
+$opt  = @getopt("p:");
+$me = basename(__FILE__);
+
+echo "<br><br>
+   > <span id=done 
+   style=background-color:blue;color:white>".$cmd."</span>
+   <span id=info></span><br>
+ ";
+echo "
+  <style>
+  body{color:red;font:caption;margin:0 2%;width:98%;transition:all linear 0.2s}
+  form{display:inline}
+  #pwn{width:415px}
+  #prt{width:60px}
+  pre{font-size:0.7em;word-wrap: break-word;max-width:500px}
+  a{color:red}
+  #nm{background:#232323;color:grey;max-width:94.5%}
+  #top{position:absolute;top:50px;right:5%;height:60px;max-width:160px}
+  button{position:relative;font-size:0.9em;width:160px}
+  </style>
+";
+@system("touch runs && echo '$cmd $port' >> runs");
+if (!isset($port)){
+  $port = "707";
+  }
+echo "\n\necho port: <input id=prt value=".$port." />\n";  
+if ($opt){
+  echo "Binding on port: ".@$opt["p"]."\n";
+  $port = @$opt["p"];
+  }
+if (!isset($cmd)){
+  $cmd = "whoami && lshw -short";
+  }
+echo "
+  <form onsubmit='xhr();return false'>
+  <input id=pwn value=".$cmd." placeholder='whoami && lshw -short' />
+  </form><br> 
+  <span id=mon style=color:chartreuse>
+";
+echo "<div style=display:none>";
+system("clear");
+system("echo '\e[38;5;198mShell attach kindly to internet'");
+for ($i = 0; $i <= 100; $i++) {
+    echo "\033[44mspawning... {$i}%\r"."\033[37m";
+    usleep(100);
+ }
+usleep(100);
+echo "</div>\n";
+@system("$cmd 2>&1 > shell &&
+          aha --black -s -f shell > out.html &");
+@system("screen php -S localhost:$port shakti");
+//~ @system("cat runs");
+@system("cat out.html");
+if (isset($live)){
+  echo "
+  <script>
+   setInterval(function(){ xhr() }, 1000)
+  </script>";
+  }
+echo "
+  <script>
+  function xhr(){
+    document.body.style.filter='blur(0.03em)'
+    const xhr = new XMLHttpRequest()
+    xhr.onreadystatechange = function(event) {
+     if (this.readyState === XMLHttpRequest.DONE) {
+      if (this.status === 200) {
+          document.body.innerHTML = this.responseText
+          lnk()
+          document.body.style.filter='blur(0px)'
+                    if (prt.value !== location.port){
+          if (window.confirm('Job running @ '+
+               'http://localhost:'+prt.value+'/?cmd='+pwn.value+
+                '&port='+prt.value+'&live')){
+         window.open('http://localhost:'+prt.value+'/?cmd='+pwn.value+
+              '&port='+prt.value+'&live')
+        return
+      }}
+    }}}
+  console.log('http://localhost:'+location.port+'/?cmd='+pwn.value+
+               '&port='+prt.value+'&live')
+  xhr.open('GET','http://localhost:'+location.port+'/?cmd='+pwn.value+
+            '&port='+prt.value, true);
+  xhr.send(null)
+  }
+  function lnk(){
+  let open = 'http://localhost:'+prt.value+'/?cmd='+pwn.value+
+              '&port='+prt.value+'&live'
+  info.innerHTML = 'Job running @ <a href=\"' + open + '\">'+open+'</a>'
+  }
+  prt.value=location.port
+  let open = 'http://localhost:'+prt.value+
+        '/?cmd='+pwn.value+'&port='+prt.value+'&live'
+  info.innerHTML = 'job running @ <a href=\"' + open + '\">'+open+'</a>'
+  lnk()
+</script>
+";
+// Helper command buttons, meant to be customised!
+echo "
+  <div id=top>
+  <button onclick='pwn.value=this.innerHTML;xhr()'>
+    pidstat
+      </button>
+  <button onclick='pwn.value=this.innerHTML;xhr()'>
+    lastcomm
+      </button>
+  <button onclick='pwn.value=this.innerHTML;xhr()'>
+    info
+      </button>
+  <button onclick='pwn.value=this.innerHTML;xhr()'>
+    cat /etc/services
+      </button>
+  <button onclick='pwn.value=this.innerHTML;xhr()'>
+    netstat -aon
+      </button>
+  <button onclick='pwn.value=this.innerHTML;xhr()'>
+    netstat -lntu
+      </button>
+  <button onclick='pwn.value=this.innerHTML;xhr()'>
+    lsblk
+      </button>
+  <button onclick='pwn.value=this.innerHTML;xhr()'>
+    sudo dmidecode -t memory
+      </button>
+  <button onclick='pwn.value=this.innerHTML;xhr()'>
+    df -h
+      </button>
+  <button onclick='pwn.value=this.innerHTML;xhr()'>
+    dpigs -H
+      </button>
+  <button onclick='pwn.value=this.innerHTML;xhr()'>
+    uptime
+      </button>
+  <button onclick='pwn.value=this.innerHTML;xhr()'>
+    ls /bin
+      </button>
+  <button onclick='pwn.value=this.innerHTML;xhr()'>
+    ifconfig
+      </button>
+  </div>
+";
+echo "<div id=nm>shakti ".php_sapi_name();
+declare(ticks = 1);
+
+pcntl_signal(SIGUSR1, function ($signal) {
+  echo 'HANDLE SIGNAL ' . $signal . PHP_EOL;
+  system("clear");
+  for ($i = 0; $i <= 100; $i++) {
+      echo "\033[44mShiva.. {$i}%\r";
+      usleep(10000);
+  }
+  @system("cd && rm shell && rm out.html && rm runs");
+  echo "\n\nBye\n\n";
+
+});
+posix_kill(posix_getpid(), SIGUSR1);
+
+die;
