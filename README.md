@@ -2,10 +2,10 @@
 
 #### Bind the shell to any http port | Remote controller | Shell Attached Kindly To Internet
 
-<img width=73% src="https://media.giphy.com/media/3ohzdTxq5tFeA4GJ7G/giphy.gif"></img>
+<img width=100% src="https://media.giphy.com/media/3ohzdV0vtdPPMUniE0/giphy.gif"></img>
 
 
-### What?
+### ⮊ What?
 
 This is a remote shell. It allow to send <b>unix</b> commands via the http protocol.
 
@@ -29,21 +29,21 @@ There is no authentification. There is no keys to setup.
 
 Shell results are converted to html, then served with the php built-in server.
 
-Commands are sent with ajax/javascript to the php file.
+Commands are sent with ajax/javascript to the php file. 
 
 The server act as a daemon, wait for commands, and can open ports on demand. 
 
     sudo ./shakti
 
-Default <b>port 707</b>, or pass the port as <b>-p</b> argument:
+Default <b>port 707</b>, or pass the port with the  <b>-p</b> argument:
 
     sudo ./shakti -p 8080
-
+    
 ### ⮊ When?
 
-Anytime when an easy remote controller with no security is desirable. 
+Anytime when a remote controller with no security is desirable. 
 
-This tool won't replace ssh, but allow to remotly simulate his behavior, in an easier connection way
+This tool won't replace ssh, but allow to remotly simulate his behavior, in an easier setup way
 
 If you need security, use ssh.
 
@@ -56,9 +56,9 @@ But if you don't, here is a one liner pipe runner:
 
 Localhost, private networks, dev/hack environments, clusters.
 
-Of course it can as well fully works on the public web, with just a port forwarding.
+Of course it can as well fully works on the public web, with just a little port forwarding.
 
-The php built-in server can fall asleep after some times, to avoid this, just wake up him with any command.
+The php built-in server can fall asleep after some times, to avoid wake up him in intervals with any command.
 
 
 ### ⮊ Usage? 
