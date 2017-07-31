@@ -10,7 +10,7 @@ header("Access-Control-Allow-Origin: *");
 # Shell attached kindly to internet
 # Bind the shell to any http port
 # Default port: 707
-# Nico KraZhtest | 04/2017 
+# Nico KraZhtest | 04/2017 | 07/2017
 
 $cmd  = @$_GET["cmd"];
 $port = @$_GET["port"];
@@ -36,7 +36,7 @@ echo "
   button{position:relative;font-size:0.9em;width:160px}
   </style>
 ";
-@system("touch runs && echo '$cmd $port' >> runs");
+@system("touch shell && touch out.html && touch runs && echo '$cmd $port' >> runs");
 if (!isset($port)){
   $port = "707";
   }
@@ -48,6 +48,13 @@ if ($opt){
 if (!isset($cmd)){
   $cmd = "whoami && lshw -short";
   }
+
+$local = system("ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'");
+echo $local;
+echo "\n";
+
+sleep(2);
+
 echo "
   <form onsubmit='xhr();return false'>
   <input id=pwn value=".$cmd." placeholder='whoami && lshw -short' />
@@ -62,7 +69,7 @@ usleep(100000);
 echo "\n</div>\n";
 @system("$cmd 2>&1 > shell &&
           aha --black -s -f shell > out.html &");
-@system("screen php -S localhost:$port shakti");
+@system("screen php -S $local:$port shakti");
 //~ @system("cat runs");
 @system("cat out.html");
 if (isset($live)){
@@ -82,28 +89,28 @@ echo "
           document.body.innerHTML = this.responseText
           lnk()
           document.body.style.filter='blur(0px)'
-         if (prt.value !== location.port){
+                    if (prt.value !== location.port){
           if (window.confirm('Job running @ '+
-               'http://localhost:'+prt.value+'/?cmd='+pwn.value+
+               'http://".$local.":'+prt.value+'/?cmd='+pwn.value+
                 '&port='+prt.value+'&live')){
-         window.open('http://localhost:'+prt.value+'/?cmd='+pwn.value+
+         window.open('http://".$local.":'+prt.value+'/?cmd='+pwn.value+
               '&port='+prt.value+'&live')
         return
       }}
     }}}
-  console.log('http://localhost:'+location.port+'/?cmd='+pwn.value+
+  console.log('http://".$local.":'+location.port+'/?cmd='+pwn.value+
                '&port='+prt.value+'&live')
-  xhr.open('GET','http://localhost:'+location.port+'/?cmd='+pwn.value+
+  xhr.open('GET','http://".$local.":'+location.port+'/?cmd='+pwn.value+
             '&port='+prt.value, true);
   xhr.send(null)
   }
   function lnk(){
-  let open = 'http://localhost:'+prt.value+'/?cmd='+pwn.value+
+  let open = 'http://".$local.":'+prt.value+'/?cmd='+pwn.value+
               '&port='+prt.value+'&live'
   info.innerHTML = 'Job running @ <a href=\"' + open + '\">'+open+'</a>'
   }
   prt.value=location.port
-  let open = 'http://localhost:'+prt.value+
+  let open = 'http://".$local.":'+prt.value+
         '/?cmd='+pwn.value+'&port='+prt.value+'&live'
   info.innerHTML = 'job running @ <a href=\"' + open + '\">'+open+'</a>'
   lnk()
@@ -159,12 +166,8 @@ declare(ticks = 1);
 pcntl_signal(SIGUSR1, function ($signal) {
   echo 'HANDLE SIGNAL ' . $signal . PHP_EOL;
   system("clear");
-  for ($i = 0; $i <= 100; $i++) {
-      echo "\033[44mShiva.. {$i}%\r";
-      usleep(10000);
-  }
-  @system("cd && rm shell && rm out.html && rm runs");
-  echo "\n\nBye\n\n";
+  @system("rm shell && rm out.html && rm runs");
+  echo "\nBye ॐ \n\n";
 
 });
 posix_kill(posix_getpid(), SIGUSR1);
