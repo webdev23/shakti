@@ -31,6 +31,10 @@ Shell results are converted to html, then served with the php built-in server.
 
 Commands are sent with ajax/javascript to the php file. 
 
+The system need <b>aha</b>
+
+    sudo apt install aha
+
 The server act as a daemon, wait for commands, and can open ports on demand. 
 
     sudo ./shakti
