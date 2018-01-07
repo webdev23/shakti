@@ -70,6 +70,24 @@ The php built-in server can fall asleep after some times, to avoid wake up him i
 Just open with a browser the link given on launch.
 
 
+### To run into termux android
+
+We need to install some packages into termux.
+Mostly aha isn't available into termux apt, so we need to complile with make/clang.
+Here is <b>adb</b> commands to run from a computer, from a stock blank termux install to a full running <b>shakti</b>:
+
+    adb shell input keyevent KEYCODE_WAKEUP && adb shell input text apt%supdate%s&&%sapt%supgrade && adb shell input keyevent 160
+    adb shell input text apt%sinstall%swget%sgit%smake%sclang%sscreen%stermux-setup-storage%stermux-exec%stermux-api%s-y && adb shell input keyevent 160
+    adb shell input text git%sclone%shttps://github.com/theZiz/aha.git && adb shell input keyevent 160
+    adb shell input text cd%saha
+    adb shell input text make
+    adb shell input text make%sinstall
+    adb shell input keyevent KEYCODE_WAKEUP  && adb shell am force-stop com.termux && adb shell monkey -p com.termux 1 
+    adb shell input text wget%shttps://webdev23.github.io/shakti/shakti && adb shell input keyevent 160
+    adb shell input text chmod%s+x%sshakti && adb shell input keyevent 160
+    adb shell input text ./shakti%s-p%s8080 && adb shell input keyevent 160
+   
+
 ### ⮊ Examples of uses? 
 
 From the default port 707, open the port 3838 to echo the command <b>ls</b>
