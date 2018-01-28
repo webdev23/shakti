@@ -9,18 +9,20 @@
 
 This is a remote shell. It allow to send <b>unix</b> commands via the http protocol.
 
-An interface will be accessible on the defined port, with some usefuls commands. They are meant to be edited.
+An interface will be accessible on the defined port, with some usefuls predefined commands. They are meant to be edited.
 
 This interface allow to send shell commands and will echo the command result on the wanted ports.
 
 Commands can be sent in loop. They can also be sent/called from a terminal with <b>w3m</b>
+
+This program is a php shell script written in one file to keep it portable.
 
 
 ### ⮊ Why?
 
 Allow to control devices in an easy way. Commands automation are then easy to manage.
 
-As example, controls a <i>raspberry pi</i> directly via the local network.
+As example, controls a <i>raspberry pi</i> directly via any browser on the local network.
 
 There is no authentification. There is no keys to setup. 
 
