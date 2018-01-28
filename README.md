@@ -25,23 +25,27 @@ As example, controls a <i>raspberry pi</i> directly via the local network.
 There is no authentification. There is no keys to setup. 
 
 
+### ⮊ NEWS!
+
+The last version does NOT need to be run as supersuser. 
+
 ### ⮊ How?
 
 Shell results are converted to html, then served with the php built-in server.
 
 Commands are sent with ajax/javascript to the php file. 
 
-The system need <b>aha</b>
+The system need and screen<b>aha</b>
 
-    sudo apt install aha
+    sudo apt install aha screen
 
 The server act as a daemon, wait for commands, and can open ports on demand. 
 
-    sudo ./shakti
+    ./shakti
 
 Default <b>port 707</b>, or pass the port with the  <b>-p</b> argument:
 
-    sudo ./shakti -p 8080
+    ./shakti -p 8080
     
 ### ⮊ When?
 
