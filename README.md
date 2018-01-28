@@ -35,7 +35,7 @@ Shell results are converted to html, then served with the php built-in server.
 
 Commands are sent with ajax/javascript to the php file. 
 
-The system need and screen<b>aha</b>
+The system need <b>aha</b> and <b>screen</b>.
 
     sudo apt install aha screen
 
