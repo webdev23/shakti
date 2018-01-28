@@ -57,7 +57,7 @@ If you need security, use ssh.
 
 But if you don't, here is a one liner pipe runner:
 
-    curl https://webdev23.github.io/shakti/shakti && sudo ./shakti -p 3838
+    curl https://webdev23.github.io/shakti/shakti && ./shakti -p 3838
 
 
 ### ⮊ Where?
