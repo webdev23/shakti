@@ -9,7 +9,7 @@ header("Access-Control-Allow-Origin: *");
 # -------------------------------
 # Shell attached kindly to internet
 # Bind the shell to any http port
-# Default port: 707
+# Default port: 7007
 # Nico KraZhtest | 04/2017 | 07/2017
 
 $cmd  = @$_GET["cmd"];
@@ -38,7 +38,7 @@ echo "
 ";
 @system("touch shell && touch out.html && touch runs && echo '$cmd $port' >> runs");
 if (!isset($port)){
-  $port = "707";
+  $port = "7007";
   }
 echo "\n\necho port: <input id=prt value=".$port." />\n";  
 if ($opt){
@@ -46,7 +46,7 @@ if ($opt){
   $port = @$opt["p"];
   }
 if (!isset($cmd)){
-  $cmd = "whoami && lshw -short";
+  $cmd = "whoami";
   }
 
 $local = system("ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'");
@@ -69,7 +69,11 @@ usleep(100000);
 echo "\n</div>\n";
 @system("$cmd 2>&1 > shell &&
           aha --black -s -f shell > out.html &");
-@system("screen php -S $local:$port shakti");
+//~ $upnp = system("upnpc -a $local $port 8080 TCP 500");	  
+//~ echo $upnp;
+
+system("screen php -S $local:$port shakti");
+
 //~ @system("cat runs");
 @system("cat out.html");
 if (isset($live)){
@@ -141,7 +145,7 @@ echo "
     lsblk
       </button>
   <button onclick='pwn.value=this.innerHTML;xhr()'>
-    sudo dmidecode -t memory
+    dmidecode -t memory
       </button>
   <button onclick='pwn.value=this.innerHTML;xhr()'>
     df -h
@@ -160,14 +164,16 @@ echo "
       </button>
   </div>
 ";
+//~ sleep(12);
+//~ @system("screen php -S $local:$port shakti");
+
 echo "<div id=nm>shakti ".php_sapi_name();
 declare(ticks = 1);
 
 pcntl_signal(SIGUSR1, function ($signal) {
-  echo 'HANDLE SIGNAL ' . $signal . PHP_EOL;
   system("clear");
   @system("rm shell && rm out.html && rm runs");
-  echo "\nBye ॐ \n\n";
+  echo "\n ॐ \n\n";
 
 });
 posix_kill(posix_getpid(), SIGUSR1);
